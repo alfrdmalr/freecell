@@ -1,13 +1,13 @@
-package freecell.controller;
+package controller;
 
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-import freecell.model.Card;
-import freecell.model.FreecellOperations;
-import freecell.model.PileType;
+import model.Card;
+import model.FreecellOperations;
+import model.PileType;
 
 /**
  * Represents a controller for the game of freecell.
@@ -49,7 +49,7 @@ public class FreecellController implements IFreecellController<Card> {
       Scanner myScanner = new Scanner(in);
       while (!model.isGameOver()) {
         if (expected == Command.SOURCE) {
-          out.append("\n" + model.getGameState());
+          out.append("\n" + model.getGameState() + "\n");
         }
 
         // no more moves
@@ -59,20 +59,33 @@ public class FreecellController implements IFreecellController<Card> {
         }
 
         String n = myScanner.next();
-        if (n.equals("q") || n.equals("Q")) {
-          out.append("\nGame quit prematurely.");
+        switch(n.toLowerCase()) {
+          case "h": out.append("Commands:\n\th - provides list of commands"
+                  + "\n\tq - quits the game\n\tr - resets the game\n\ts - shows the current game state\n"
+                  + "Input Example: C1 7 O3");
+            break;
+          case "q": out.append("Game quit prematurely.");
           return;
-        } else {
-          inputHandler(n);
-          try {
-            tryMove(model);
-          } catch (IllegalArgumentException e) {
-            out.append("\nInvalid move. Try again:" + e.getMessage());
-          }
+          case "r":
+            out.append("reset not supported, sorry!");
+            //out.append("Game resetting...");
+            //this.reset();
+            //out.append("Game reset");
+            //out.append(model.getGameState());
+            break;
+          case "s": out.append(model.getGameState());
+            break;
+          default: inputHandler(n);
+            try {
+              tryMove(model);
+            } catch (IllegalArgumentException e) {
+              out.append("\nInvalid move. Try again:" + e.getMessage());
+            }
+            break;
         }
       }
       if (model.isGameOver()) {
-        out.append("\n" + model.getGameState());
+        out.append("\n" + model.getGameState() + "\n");
         out.append("\nGame over.");
         return;
       }
