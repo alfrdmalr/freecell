@@ -142,8 +142,7 @@ public class Card {
    * @return a string of length 1 or 2 ("10") representing the value.
    */
   public String toString() {
-
-
+    
     String suit;
     switch (this.suit) {
       case DIAMONDS:
