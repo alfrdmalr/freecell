@@ -9,6 +9,7 @@ import java.util.HashMap;
 public class Card {
   private int value;
   private Suit suit;
+  private HashMap<Integer, String> cardVals;
 
   /**
    * Creates a card with the specified value and suit.
@@ -20,6 +21,17 @@ public class Card {
     if (validCardInput(value, suit)) {
       this.value = value;
       this.suit = suit;
+      this.cardVals = new HashMap<>();
+
+      cardVals.put(1, "A");
+      cardVals.put(11, "J");
+      cardVals.put(12, "Q");
+      cardVals.put(13, "K");
+
+      for (int i = 2; i < 11; i++) {
+        cardVals.put(i, Integer.toString(i));
+      }
+
     } else {
       throw new IllegalArgumentException("Invalid arguments for Card constructor");
     }
@@ -130,16 +142,9 @@ public class Card {
    * @return a string of length 1 or 2 ("10") representing the value.
    */
   public String toString() {
-    HashMap<Integer, String> cardVals = new HashMap<Integer, String>();
-    cardVals.put(1, "A");
-    cardVals.put(11, "J");
-    cardVals.put(12, "Q");
-    cardVals.put(13, "K");
-    for (int i = 2; i < 11; i++) {
-      cardVals.put(i, Integer.toString(i));
-    }
 
-    String suit = "";
+
+    String suit;
     switch (this.suit) {
       case DIAMONDS:
         suit = "♦";
@@ -157,7 +162,7 @@ public class Card {
         throw new RuntimeException("Suit is not properly initialized");
     }
 
-    return cardVals.get(value) + suit;
+    return this.cardVals.get(value) + suit;
   }
 
 }
