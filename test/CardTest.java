@@ -2,6 +2,7 @@
 
 import org.junit.Test;
 
+
 import freecell.model.Card;
 import freecell.model.Suit;
 

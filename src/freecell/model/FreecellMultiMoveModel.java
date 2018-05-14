@@ -147,7 +147,7 @@ public class FreecellMultiMoveModel extends FreecellModel {
     long possibleMoves = (n + 1) * (int) Math.pow(2, k);
 
     if (possibleMoves < 0) {
-      return true; // OVERFLOW LOL
+      return true; // OVERFLOW
     }
 
     return i <= possibleMoves;

@@ -28,14 +28,13 @@ public class Card {
       cardVals.put(12, "Q");
       cardVals.put(13, "K");
 
-      for (int i = 2; i < 11; i++) {
+        for (int i = 2; i < 11; i++) {
         cardVals.put(i, Integer.toString(i));
-      }
-
+        }
     } else {
-      throw new IllegalArgumentException("Invalid arguments for Card constructor");
+        throw new IllegalArgumentException("Invalid arguments for Card constructor");
     }
-  }
+}
 
   /**
    * Verifies that the input is valid for a playing card. Value should be no lower than 1 and no
@@ -48,7 +47,7 @@ public class Card {
    */
   private static boolean validCardInput(int value, Suit suit) {
     return suit != null && (value < 14 && value > 0);
-  }
+}
 
   /**
    * Verifies that this card has valid value and suit fields.
@@ -57,7 +56,7 @@ public class Card {
    */
   public boolean isValid() {
     return validCardInput(this.getValue(), this.getSuit());
-  }
+}
 
   /**
    * Obtains the numerical value of this card.
@@ -66,7 +65,7 @@ public class Card {
    */
   public int getValue() {
     return this.value;
-  }
+}
 
   /**
    * Obtains the suit of this card.
@@ -75,7 +74,7 @@ public class Card {
    */
   public Suit getSuit() {
     return this.suit;
-  }
+}
 
   /**
    * Obtains the color of this card; based on suit.
@@ -86,22 +85,22 @@ public class Card {
     String color = "";
     switch (suit) {
       case CLUBS:
-        color = "black";
-        break;
+      color = "black";
+      break;
       case SPADES:
-        color = "black";
-        break;
+      color = "black";
+      break;
       case HEARTS:
-        color = "red";
-        break;
+      color = "red";
+      break;
       case DIAMONDS:
-        color = "red";
-        break;
+      color = "red";
+      break;
       default:
-        throw new RuntimeException("Suit not properly initialized");
-    }
-    return color;
+      throw new RuntimeException("Suit not properly initialized");
   }
+  return color;
+}
 
   /**
    * Determines if the given card is a different color than this one. Suit does not necessarily
@@ -112,7 +111,7 @@ public class Card {
    */
   public boolean differentColor(Card o) {
     return !this.getColor().equals(o.getColor());
-  }
+}
 
   /**
    * Determines if the given card has the same suit as this one.
@@ -122,7 +121,7 @@ public class Card {
    */
   public boolean sameSuit(Card o) {
     return this.suit == o.getSuit();
-  }
+}
 
   /**
    * Determines if the given card is the same card as this one. Different instances may be
@@ -133,7 +132,7 @@ public class Card {
    */
   public boolean sameCard(Card o) {
     return this.value == o.getValue() && this.suit == o.getSuit();
-  }
+}
 
   /**
    * Returns the "ranking" of the card, or the symbol associated with its value. For instance, a
@@ -142,26 +141,26 @@ public class Card {
    * @return a string of length 1 or 2 ("10") representing the value.
    */
   public String toString() {
-    
+
     String suit;
     switch (this.suit) {
       case DIAMONDS:
-        suit = "♦";
+        suit = "♦"; //"D";
         break;
       case HEARTS:
-        suit = "♥";
+        suit = "♥"; // "H";
         break;
       case SPADES:
-        suit = "♠";
+        suit = "♠"; // "S";
         break;
       case CLUBS:
-        suit = "♣";
+        suit = "♣"; //"C";
         break;
       default:
         throw new RuntimeException("Suit is not properly initialized");
     }
 
-    return this.cardVals.get(value) + suit;
-  }
+  return this.cardVals.get(value) + suit;
+}
 
 }

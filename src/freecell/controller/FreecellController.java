@@ -1,13 +1,13 @@
-package controller;
+package freecell.controller;
 
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-import model.Card;
-import model.FreecellOperations;
-import model.PileType;
+import freecell.model.Card;
+import freecell.model.FreecellOperations;
+import freecell.model.PileType;
 
 /**
  * Represents a controller for the game of freecell.
@@ -67,7 +67,7 @@ public class FreecellController implements IFreecellController<Card> {
           case "q": out.append("Game quit prematurely.");
           return;
           case "r":
-            out.append("reset not supported, sorry!");
+            out.append("reset not supported yet, sorry!");
             //out.append("Game resetting...");
             //this.reset();
             //out.append("Game reset");
@@ -220,9 +220,16 @@ public class FreecellController implements IFreecellController<Card> {
     }
 
     // ask the model to perform the move
-    m.move(source, pileNumber, cardIndex, dest, destPileNumber);
+    try {
+      m.move(source, pileNumber, cardIndex, dest, destPileNumber);
+    } catch (Exception e) {
+      System.out.println("caught an error but i'm gonna reset the commands");
+    }
 
-    //reset the command sequence
+   this.resetCommands();
+  }
+
+  private void resetCommands() {
     this.commands[0] = "";
     this.commands[1] = "";
     this.commands[2] = "";
