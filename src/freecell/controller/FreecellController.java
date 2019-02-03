@@ -122,11 +122,12 @@ public class FreecellController implements IFreecellController<Card> {
     String pile;
     String index;
 
-    // should abstract this (source and dest)
+    s = s.toUpperCase();
     switch (this.expected) {
       case SOURCE:
         if (s.length() < 1) {
           out.append("\nSource pile cannot be a single character");
+          this.resetCommands();
           return;
         } else if (s.charAt(0) == 'F' || s.charAt(0) == 'C' || s.charAt(0) == 'O') {
           pile = s.substring(0, 1);
@@ -137,10 +138,12 @@ public class FreecellController implements IFreecellController<Card> {
             this.expected = Command.CARD;
           } catch (NumberFormatException e) {
             out.append("\nCannot parse source pile number. Try again.");
+            this.resetCommands();
             return;
           }
         } else {
           out.append("\nInvalid source pile. Try again.");
+          this.resetCommands();
           return;
         }
         break;
@@ -151,12 +154,14 @@ public class FreecellController implements IFreecellController<Card> {
           this.commands[1] = index;
           this.expected = Command.DEST;
         } catch (NumberFormatException e) {
+          this.resetCommands();
           out.append("\nCannot parse card index. Try again.");
         }
         break;
       case DEST:
         if (s.length() < 1) {
           out.append("\nDestination pile cannot be a single character");
+          this.resetCommands();
           return;
         } else if (s.charAt(0) == 'F' || s.charAt(0) == 'C' || s.charAt(0) == 'O') {
           pile = s.substring(0, 1);
@@ -166,10 +171,12 @@ public class FreecellController implements IFreecellController<Card> {
             this.commands[2] = pile + index;
           } catch (NumberFormatException e) {
             out.append("\nCannot parse dest pile number. Try again.");
+            this.resetCommands();
             return;
           }
         } else {
           out.append("\nInvalid dest pile. Try again.");
+          this.resetCommands();
           return;
         }
         break;
@@ -219,11 +226,16 @@ public class FreecellController implements IFreecellController<Card> {
         throw new IllegalStateException("Illegal dest type, input handler error.");
     }
 
+
     // ask the model to perform the move
     try {
       m.move(source, pileNumber, cardIndex, dest, destPileNumber);
     } catch (Exception e) {
-      System.out.println("caught an error but i'm gonna reset the commands");
+      try {
+        out.append(e.getMessage());
+      } catch (IOException e1) {
+//        e1.printStackTrace();
+      }
     }
 
    this.resetCommands();

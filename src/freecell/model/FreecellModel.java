@@ -196,7 +196,8 @@ public class FreecellModel implements FreecellOperations<Card> {
           if (c1.getValue() == 1) {
             return;
           } else {
-            throw new IllegalArgumentException("Can only place Aces on empty foundation piles");
+            throw new IllegalArgumentException("Can only place Aces on empty foundation piles; " +
+                    "Attempted to place " + c1.toString());
           }
         } else {
           Card c2 = d.get(destPileNumber).peekLast();
@@ -204,11 +205,12 @@ public class FreecellModel implements FreecellOperations<Card> {
             if (c1.getValue() == 1 + c2.getValue()) {
               return;
             } else {
-              throw new IllegalArgumentException("Card value must be 1 higher than the top card " +
-                      "currently in the foundation pile");
+              throw new IllegalArgumentException(String.format("Card value must be 1 higher than the top card " +
+                      "currently in the foundation pile (%s)",c2.toString()));
             }
           } else {
-            throw new IllegalArgumentException("Card must be the same suit as the foundation pile");
+            throw new IllegalArgumentException("Card must be the same suit as the foundation pile" +
+                    " (" + c2.getSuit().toString() + ")");
           }
         }
       case CASCADE:
@@ -220,17 +222,19 @@ public class FreecellModel implements FreecellOperations<Card> {
             if (c1.getValue() == c2.getValue() - 1) {
               return;
             } else {
-              throw new IllegalArgumentException("The specified card must have a value that is 1 " +
-                      "lower than the destination card");
+              throw new IllegalArgumentException("The specified card (" + c1.toString() +
+                      ") must have a value that is 1 lower than the destination card (" +
+                      c2.toString() + ")");
             }
           } else {
-            throw new IllegalArgumentException("The specified card has the same color as the " +
-                    "destination card");
+            throw new IllegalArgumentException(String.format("The specified card (%s) has the same color as the destination card " +
+                    "(%s", c1.toString(), c2.toString()));
+
           }
         }
       default:
         throw new IllegalArgumentException("Illegal Move: destination type must be non-null " +
-                "PileType");
+                "PileType instead of " + destType.toString());
     }
   }
 
